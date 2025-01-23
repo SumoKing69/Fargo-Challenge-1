@@ -1,0 +1,4 @@
+These are the packages that need to be installed
+pip install langchain lanchain-openai beautifulsoup4 python-dotenv chromadb
+
+In .env file, the API key for OpenAI must be provided for the embedding and LLM to work
