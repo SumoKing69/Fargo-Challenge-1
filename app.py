@@ -1,5 +1,4 @@
 # import 
-from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownTextSplitter
 from langchain_openai import OpenAIEmbeddings , ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate , MessagesPlaceholder
@@ -8,7 +7,6 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from flask import Flask, request, jsonify, render_template, session
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from bs4 import BeautifulSoup
 import requests
 from bs4 import BeautifulSoup
 import html2text
@@ -73,7 +71,7 @@ def get_vectorstore(url):
         persist_directory="data/chroma")
 
     vector_store.add_documents(doc_chunks)
-    # vector_store.persist()
+    vector_store.persist()
     return vector_store
 
 def get_context_chain(vector_store):
@@ -92,7 +90,7 @@ def get_context_chain(vector_store):
 
 
 def get_convo_chain(retriever_chain):
-    llm = ChatOpenAI(api_key="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")
+    llm = ChatOpenAI()
     prompt = ChatPromptTemplate.from_messages([
         ("system", "Answer the user's questions based on the context:\n\n{context}"),
         MessagesPlaceholder(variable_name="chat_history"),
